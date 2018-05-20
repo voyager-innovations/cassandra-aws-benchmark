@@ -5,7 +5,7 @@
         "aws_region": "us-west-2",
         "aws_ami_image": "ami-223f945a",
         "aws_instance_type": "i3.large",
-        "image_version" : "0.0.0"
+        "image_version" : "0.0.1"
     },
     "builders": [
         {
