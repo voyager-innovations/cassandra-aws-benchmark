@@ -19,19 +19,24 @@ set -e -x
 # Install packages
 sudo cp -r /home/ec2-user/resources/ /root/
 
-sudo yum install -y epel-release
+# sudo yum install -y epel-release
 sudo yum update -y
 sudo yum install -y wget
 sudo yum remove -y java-1.7.0-openjdk
-sudo yum install -y java-1.8.0-openjdk-devel
+# sudo yum install -y java-1.8.0-openjdk-devel
 sudo yum install -y ntp
 sudo yum install -y jna
-sudo yum install -y jemalloc
+# sudo yum install -y jemalloc
 sudo yum install -y sysstat
 sudo yum install -y dstat
-sudo yum install -y htop
-sudo yum install -y xfsprogs
-sudo yum install -y xfsdump
+# sudo yum install -y htop
+# sudo yum install -y xfsprogs
+# sudo yum install -y xfsdump
+
+JAVA_PACKAGE=jdk-8u171-linux-x64.rpm
+curl -C - -LR#OH "Cookie: oraclelicense=accept-securebackup-cookie" -k \
+	http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/$JAVA_PACKAGE
+sudo rpm -ivh $JAVA_PACKAGE
 
 # Tune OS
 ## Remove constraint on processes
@@ -45,7 +50,9 @@ sudo cp ~/resources/initd-disable-transparent-hugepages /etc/init.d/disable-tran
 sudo chmod 755 /etc/init.d/disable-transparent-hugepages
 
 # Install Cassandra
-sudo rpm -ivh ~/resources/cassandra.rpm
+cd ~/resources
+wget https://archive.apache.org/dist/cassandra/redhat/311x/cassandra-3.11.2-1.noarch.rpm 
+sudo rpm -ivh ~/resources/cassandra-3.11.2-1.noarch.rpm 
 
 # Cassandra configs
 sudo cp ~/resources/etc/cassandra/default.conf/cassandra.yaml /etc/cassandra/default.conf/cassandra.yaml

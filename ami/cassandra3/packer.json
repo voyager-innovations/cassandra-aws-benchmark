@@ -1,9 +1,9 @@
 {
     "variables": {
-        "aws_access_key": "",
-        "aws_secret_key": "",
+        "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+        "aws_secret_key": "{{env `AWS_SECRET_KEY`}}",
         "aws_region": "us-west-2",
-        "aws_ami_image": "ami-a142e9d9",
+        "aws_ami_image": "ami-223f945a",
         "aws_instance_type": "i3.large",
         "image_version" : "0.0.0"
     },
@@ -16,10 +16,10 @@
             "source_ami": "{{user `aws_ami_image`}}",
             "instance_type": "{{user `aws_instance_type`}}",
             "ssh_username": "ec2-user",
-            "ami_name": "cassandra3-benchmark-{{user `image_version`}}",
+            "ami_name": "cassandra3-ngfin-{{user `image_version`}}",
             "ami_groups": "all",
             "tags": {
-                "Name": "cassandra3-benchmark-{{user `image_version`}}",
+                "Name": "cassandra3-ngfin-{{user `image_version`}}",
                 "Description": "Cassandra 3 image for benchmark purpose"
             }
         }
