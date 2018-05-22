@@ -51,9 +51,8 @@ sudo chown tomcat:tomcat /var/log/ndbench
 
 ## checkout code
 cd ~
-wget https://github.com/Netflix/ndbench/archive/v0.3.11.tar.gz
-tar zxvf v0.3.11.tar.gz
-cd ndbench-0.3.11
+git clone https://github.com/Netflix/ndbench.git
+cd ndbench
 
 ## config logging with fix size rotations otherwise ndbench log will fill up disks fairly quick
 cp ~/resources/ndbench/log4j.properties ndbench-web/src/main/resources/
@@ -62,5 +61,5 @@ cp ~/resources/ndbench/web.xml ndbench-web/src/main/webapp/WEB-INF/web.xml
 
 
 ## build and deploy to tomcat8
-./gradlew clean build
-sudo cp ./ndbench-web/build/libs/ndbench-web-0.4.0-SNAPSHOT.war /opt/tomcat/webapps/ROOT.war
+./gradlew build
+sudo cp ./ndbench-web/build/libs/ndbench-web-*.war /opt/tomcat/webapps/ROOT.war
