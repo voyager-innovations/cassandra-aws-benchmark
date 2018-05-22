@@ -16,14 +16,30 @@
 #
 set -e -x
 
-sudo yum install -y epel-release
+# sudo yum install -y epel-release
 sudo yum update -y
 
 sudo yum remove -y java-1.7.0-openjdk
 sudo yum install -y java-1.8.0-openjdk-devel
-sudo yum install -y tomcat8
 sudo yum install -y ntp
 sudo yum install -y git-core
+sudo yum -y install wget
+sudo yum -y install unzip
+
+# Install tomcat8
+sudo groupadd tomcat
+sudo useradd -M -s /bin/nologin -g tomcat -d /opt/tomcat tomcat
+cd ~
+wget http://mirror.rise.ph/apache/tomcat/tomcat-8/v8.5.31/bin/apache-tomcat-8.5.31.tar.gz
+sudo mkdir /opt/tomcat
+sudo tar xvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1
+cd /opt/tomcat
+sudo chgrp -R tomcat conf
+sudo chmod g+rwx conf
+sudo chmod g+r -R conf
+sudo chown -R tomcat webapps/ work/ temp/ logs/
+sudo cp ~/resources/systemmd/tomcat.service /etc/systemd/system/tomcat.service
+
 
 
 # build and install ndbench
@@ -35,8 +51,9 @@ sudo chown tomcat:tomcat /var/log/ndbench
 
 ## checkout code
 cd ~
-git clone https://github.com/wpc/ndbench.git
-cd ndbench
+wget https://github.com/Netflix/ndbench/archive/v0.3.11.tar.gz
+tar zxvf v0.3.11.tar.gz
+cd ndbench-0.3.11
 
 ## config logging with fix size rotations otherwise ndbench log will fill up disks fairly quick
 cp ~/resources/ndbench/log4j.properties ndbench-web/src/main/resources/
@@ -46,5 +63,4 @@ cp ~/resources/ndbench/web.xml ndbench-web/src/main/webapp/WEB-INF/web.xml
 
 ## build and deploy to tomcat8
 ./gradlew clean build
-sudo cp ./ndbench-web/build/libs/ndbench-web-0.4.0-SNAPSHOT.war /var/lib/tomcat8/webapps/ROOT.war
-
+sudo cp ./ndbench-web/build/libs/ndbench-web-0.4.0-SNAPSHOT.war /opt/tomcat/webapps/ROOT.war
