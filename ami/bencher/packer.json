@@ -1,11 +1,11 @@
 {
     "variables": {
-        "aws_access_key": "",
-        "aws_secret_key": "",
+        "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+        "aws_secret_key": "{{env `AWS_SECRET_KEY`}}",
         "aws_region": "us-west-2",
-        "aws_ami_image": "ami-a142e9d9",
+        "aws_ami_image": "ami-223f945a",
         "aws_instance_type": "m4.large",
-        "image_version" : "0.0.0"
+        "image_version" : "0.0.1"
     },
     "builders": [
         {
@@ -20,7 +20,7 @@
             "ami_groups": "all",
             "tags": {
                 "Name": "bencher-{{user `image_version`}}",
-                "Description": "benchmark tools"
+                "Description": "NDBench for AWS with basic configuration for Apache Cassandra"
             }
         }
     ],

@@ -2,7 +2,7 @@
 Scripts and templates for cassandra benchmark environment provision
 
 ## Requirements
-* aws cli: `pip install awscli --upgrade --user` and `aws configure`
+* aws cli: `brew install awscli` and `aws configure`
 
 ## Create benchmark environment
 
